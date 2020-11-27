@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>俳句帳</title>
+   <script src="js/jquery-2.1.3.min.js"></script>
+   <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+   <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+  <link rel='stylesheet' href='css/reset.css'>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/haiku.js"></script>
+</head>
+
+<body>
+   
+  <header>
+    <!-- <div class = "title">俳句帳</div> -->
+    <div class="touku">
+        <!-- <input type="button" id="add_haiku" value="詠句" onclick="eiku()"> -->
+        <!-- 詠句ボタン -->
+        <button id="add_haiku" value="詠句">詠句</button>
+
+        <!-- 詠句ボタンのダイアログ 内容-->
+        <div id = "add_haiku_dialog" title="詠句">
+            <div>
+                <textarea name="" id="haiku" cols="1" rows="20"></textarea>
+            </div>
+
+            <div>
+                <button id="send">詠む</button>
+            </div>
+        </div> 
+    </div>
+  </header>
+  <main>
+
+<div id="haiku_list">
+</div>
+
+  </main>
+
+ 
+  <footer>
+  </footer>
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.1.1/firebase.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+<script>
+
+
+$(function(){
+    $("#add_haiku_dialog").dialog({
+        autoOpen:false,
+        my: "center",
+        at: "center",
+        of: window
+      });
+
+    $("#add_haiku").click(function(){
+        $("#add_haiku_dialog").dialog("open");
+    })
+
+    })
+
+
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyBW42n8S-cZRXUUM8IapAkRq15bGl5yo0M",
+    authDomain: "haiku-b2409.firebaseapp.com",
+    databaseURL: "https://haiku-b2409.firebaseio.com",
+    projectId: "haiku-b2409",
+    storageBucket: "haiku-b2409.appspot.com",
+    messagingSenderId: "834749135698",
+    appId: "1:834749135698:web:7afd451014f5885e8c588b"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+  //firebaseのデーターベース（保存させる場所）を使いますよ
+const newPostRef = firebase.database().ref();
+
+
+$("#send").on("click", function () {
+    var haiku = {
+        haiku:""
+    };
+    // データを登録で送る
+    newPostRef.push({
+        haiku: $("#haiku").val()
+    })
+    $("#haiku").val("");
+    });
+
+    newPostRef.on("child_added", function (data) {
+  //ここに保存されたデータが全て入ってくる
+  // function (data)のdataにfirebaseのデータが入ってくる
+  let v = data.val();
+  // let k = data.key; //今回は使いません
+  let k = data.key;
+  //console.logで受信=firebaseに登録されている中身を確認しよう！
+  
+  //テンプレートリテラル `` を活用して変数にhtmlを埋め込もう！ 
+  let str = `<p>${v.haiku}</p>`;
+
+  // ここでデータをhtmlに埋め込む prependには変数を埋め込もう！
+  $("#haiku_list").prepend(str);
+});
+
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,51 @@
+/* ここから下に記載していく */
+header {
+  display: flex;
+  /* displayで要素の表示形式を決める　flexでフレックスコンテナボックスというものにするらしい？ */
+  justify-content: space-around;
+  /* justify-contentで各要素の主軸（横方向の配置）を決める */
+  align-items: center;
+  /* こっちは交差軸 */
+  padding-top: 20px;
+}
+
+main {
+  writing-mode: tb-rl;
+  writing-mode: vertical-rl;
+}
+
+#add_haiku{
+  display: flex;
+  position:absolute; top:10px; right:10px;
+}
+
+#add_haiku_dialog{
+  display: flex;
+  writing-mode: vertical-rl;
+  /* transform: rotate(90deg); */
+  text-orientation: upright;
+
+}
+#haiku{
+  font-size: 20px;
+  transform-origin: top left;
+}
+
+#haiku_list{
+  position: fixed;
+  margin-left: 50%;
+  margin-right: 50%;
+  margin-top: 15%;
+}
+
+.font-main {
+    padding: 2px;
+  }
+  
+  .ui-dialog-titlebar-close {
+    visibility: hidden;
+}
+
+textarea{
+  resize: none;
+}
